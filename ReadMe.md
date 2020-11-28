@@ -80,3 +80,14 @@ ffmpeg -i puba.mp4 -b:v 500k -s 854*480 pubb.mp4
 -y 意思是不用询问，直接同名覆盖
 
 [ffmpeg drawtext 滤镜](https://ffmpeg.org/ffmpeg-filters.html#drawtext-1)
+
+
+## 字幕
+
+``` shell
+
+ffmpeg -i input.mp4 -vf ass=demo.ass -y output.mp4
+
+ffmpeg -i input.mp4 -vf subtitles=demo.srt -y output.mp4
+
+``` 
