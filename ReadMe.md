@@ -91,3 +91,10 @@ ffmpeg -i input.mp4 -vf ass=demo.ass -y output.mp4
 ffmpeg -i input.mp4 -vf subtitles=demo.srt -y output.mp4
 
 ``` 
+
+## 截取视频帧为图片
+``` shell
+
+ffmpeg -ss 00:00:01 -i input.mp4 -frames:v 1 -y test.jpg
+
+``` 
