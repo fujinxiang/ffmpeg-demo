@@ -53,7 +53,7 @@ ffmpeg -i source.mp4 -i poster.png \
 ffmpeg -loop 1 -f image2 -i test2.png -vcodec libx264 -r 30 -t 3 test2.mp4
 
 # 合并两个视频
-ffmpeg -f concat -i input.txt -c copy -y output.mp4
+ffmpeg -f concat -i input.txt -c copy -avoid_negative_ts make_zero -y output.mp4
 
 # 图片和音频合成视频
 ffmpeg -loop 1 -y -i poster.png -i trll.mp3 -shortest -acodec copy -vcodec libx264 result2.mp4
@@ -98,3 +98,19 @@ ffmpeg -i input.mp4 -vf subtitles=demo.srt -y output.mp4
 ffmpeg -ss 00:00:01 -i input.mp4 -frames:v 1 -y test.jpg
 
 ``` 
+
+## 合并三个视频，解决因为视频属性不同，合并后导致音画不同步的问题
+ffmpeg -i op.mp4 -i ik.mp4 -i input.mp4 -filter_complex \
+"[0:v]scale=1280:720:force_original_aspect_ratio=decrease,pad=1280:720:-1:-1,setsar=1,fps=30,format=yuv420p[v0];
+ [1:v]scale=1280:720:force_original_aspect_ratio=decrease,pad=1280:720:-1:-1,setsar=1,fps=30,format=yuv420p[v1];
+ [2:v]scale=1280:720:force_original_aspect_ratio=decrease,pad=1280:720:-1:-1,setsar=1,fps=30,format=yuv420p[v2];
+ [v0][0:a][v1][1:a][v2][2:a]concat=n=3:v=1:a=1[v][a]" \
+-map "[v]" -map "[a]" -c:v libx264 -c:a aac -movflags +faststart -y output.mp4
+
+
+## 合并两个视频
+ffmpeg -i op.mp4 -i input.mp4 -filter_complex \
+"[0:v]scale=1280:720:force_original_aspect_ratio=decrease,pad=1280:720:-1:-1,setsar=1,fps=30,format=yuv420p[v0];
+ [1:v]scale=1280:720:force_original_aspect_ratio=decrease,pad=1280:720:-1:-1,setsar=1,fps=30,format=yuv420p[v1];
+ [v0][0:a][v1][1:a]concat=n=2:v=1:a=1[v][a]" \
+-map "[v]" -map "[a]" -c:v libx264 -c:a aac -movflags +faststart -y concat2.mp4
