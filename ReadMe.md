@@ -114,3 +114,6 @@ ffmpeg -i op.mp4 -i input.mp4 -filter_complex \
  [1:v]scale=1280:720:force_original_aspect_ratio=decrease,pad=1280:720:-1:-1,setsar=1,fps=30,format=yuv420p[v1];
  [v0][0:a][v1][1:a]concat=n=2:v=1:a=1[v][a]" \
 -map "[v]" -map "[a]" -c:v libx264 -c:a aac -movflags +faststart -y concat2.mp4
+
+## 转码为 1080P 大小，diff.mp4 是分辨率发生变化的视频
+ffmpeg -i diff.mp4 -strict -2 -vf scale=-1:1080 diff-output.mp4
