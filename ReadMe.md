@@ -117,3 +117,10 @@ ffmpeg -i op.mp4 -i input.mp4 -filter_complex \
 
 ## 转码为 1080P 大小，diff.mp4 是分辨率发生变化的视频
 ffmpeg -i diff.mp4 -strict -2 -vf scale=-1:1080 diff-output.mp4
+
+## mp4 转为 fmp4
+ffmpeg -i .\ik.mp4 -vcodec copy -f mp4 -movflags empty_moov+default_base_moof+frag_keyframe ffmpeg.mp4
+
+
+## 最常用的切割
+ffmpeg -i output.flv -ss 00:11 -t 03:29 -vcodec copy -acodec copy -avoid_negative_ts make_zero xpg.flv
