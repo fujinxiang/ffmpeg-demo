@@ -43,11 +43,7 @@ ffmpeg -i source.mp4 -vf drawtext=fontcolor=red:fontsize=64:text='滚动文字':
 
 ``` shell
 # 将图片设为视频封面，不是添加到视频帧
-ffmpeg -i source.mp4 -i poster.png \
--map 0 -map 1 \
--c copy -c:v:1 png \
--disposition:v:1 attached_pic \
--y output.mp4
+ffmpeg -i source.mp4 -i poster.png -map 0 -map 1 -c copy -c:v:1 png -disposition:v:1 attached_pic -y output.mp4
 
 # 将图片转为视频
 ffmpeg -loop 1 -f image2 -i test2.png -vcodec libx264 -r 30 -t 3 test2.mp4
