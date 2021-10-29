@@ -120,3 +120,8 @@ ffmpeg -i .\ik.mp4 -vcodec copy -f mp4 -movflags empty_moov+default_base_moof+fr
 
 ## 最常用的切割
 ffmpeg -i output.flv -ss 00:11 -t 03:29 -vcodec copy -acodec copy -avoid_negative_ts make_zero xpg.flv
+
+
+## 拉流保存到本地
+
+ffmpeg -i https://ws-live-rtmp.seewoedu.cn/live/1e6068cdab03403f995671b9a8d72ba8_720.flv -c copy demo.flv
