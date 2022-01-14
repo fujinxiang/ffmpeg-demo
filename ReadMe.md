@@ -3,6 +3,9 @@
 
 
 ``` shell
+# 在左上角0,0点添加水印
+ffmpeg -y -i tmp.mp4 -i green.png -filter_complex 'overlay=x=0:y=0' output.mp4
+
 # 在右下角添加水印
 ffmpeg -i source.mp4 -vf "movie=watermark.png[watermark];[in][watermark] overlay=main_w-overlay_w-10:main_h-overlay_h-10[out] " output.mp4
 
@@ -125,3 +128,6 @@ ffmpeg -i output.flv -ss 00:11 -t 03:29 -vcodec copy -acodec copy -avoid_negativ
 ## 拉流保存到本地
 
 ffmpeg -i https://ws-live-rtmp.seewoedu.cn/live/1e6068cdab03403f995671b9a8d72ba8_720.flv -c copy demo.flv
+ffmpeg -i https://play-pc.ourwill.cn/live/tw-1394609-1g7ojuhm_hd.flv?txSecret=2f8d180f52ffdc02276c9ff63c66eaaa&txTime=6197007B -c copy classin.flv
+
+
